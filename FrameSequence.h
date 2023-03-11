@@ -2,6 +2,7 @@
 #define _image_h
 
 #include <vector>
+#include <string>
 #include <fstream>
 
 namespace MVHASA001
@@ -11,14 +12,18 @@ namespace MVHASA001
 	class FrameSequence
 	{
 
-		int frames;
+		int width, height;
+		char *id;
+		unsigned char * source;
 
 		std::vector<unsigned char **> imageSequence;
 
 		public:
 
 		FrameSequence(); // default constructor
-		FrameSequence(const int height, const int width, std::fstream& imag);
+
+		void readImage(std::string filename, int height, int width);
+		int makeFrames(std::string filename, int windowHeight, int windowWidth, int numFrames);
 
 	};
 
