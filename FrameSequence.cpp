@@ -9,7 +9,7 @@
 FRAMES::FrameSequence() : width(0), height(0), id(nullptr), source(nullptr)
 {}
 
-void FRAMES::readImage(std::string filename, int height, int width)
+void FRAMES::readImage(std::string filename)
 {
 	std::ifstream in(filename, std::ios::binary);
 
@@ -41,13 +41,15 @@ void FRAMES::readImage(std::string filename, int height, int width)
 	// Remove whitespace
 	in >> std::ws;
 
-	// Allocate memory for the pixel data
+	// Allocate memory pixels
 	unsigned char* buffer = new unsigned char[width * height];
 
-	// Read the pixel data into the buffer
+	// Read the pixels into the buffer
 	// Convert fron unsigned char to char to avoid type mismatch
 	// because read() expects a char* not 'unsigned char*'
 	in.read(reinterpret_cast<char*>(buffer), width * height);
 
 	this->source = buffer;
+	this->height = height;
+	this->width = width;
 }
