@@ -1,5 +1,5 @@
-#ifndef _image_h
-#define _image_h
+#ifndef _FrameSequence_h
+#define _FrameSequence_h
 
 #include <vector>
 #include <string>
@@ -22,7 +22,7 @@ namespace MVHASA001
 
 		FrameSequence(); // default constructor
 
-		void readImage(std::string filename, int height, int width);
+		void readImage(std::string filename);
 		int makeFrames(std::string filename, int windowHeight, int windowWidth, int numFrames);
 
 	};
