@@ -23,7 +23,7 @@ namespace MVHASA001
 		FrameSequence(); // default constructor
 
 		void readImage(std::string filename);
-		int makeFrames(std::string filename, int windowHeight, int windowWidth, int numFrames);
+		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2);
 
 	};
 
