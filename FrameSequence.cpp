@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <cmath>
+#include <iostream>
 
 
 
@@ -49,6 +50,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	// because read() expects a char* not 'unsigned char*'
 	in.read(reinterpret_cast<char*>(buffer), width * height);
 
+	this->comment = comment;
 	this->source = buffer;
 	this->height = height;
 	this->width = width;
@@ -59,7 +61,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 	// Using y = mx + c to get line for tragectory
 	// The (x, y) coord will be the starting point of our current frame
 	float m = (y2 - y1)/(x2-x1);
-	int c = y1;
+	int c = y1 - m*x1;
 	int y = 0;
 
 	for (int x = x1; x < x2; x++)
@@ -70,12 +72,14 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 
 		unsigned char ** frame;
 		frame = new unsigned char * [windowHeight];
-		for(int i = y; i < y+windowHeight; i++)
+		for(int row = y; row < y+windowHeight; ++row)
 		{
-
-			for(int j = x; j < x+windowWidth; j++)
+			int i = row - y;
+			frame[i] = new unsigned char[windowWidth];
+			for(int col = x; col < x+windowWidth; ++col)
 			{
-				unsigned char pixel = this->source[i * this->width + j];
+				int j = col - x;
+				unsigned char pixel = this->source[row * this->width + col];
 				frame[i][j] = pixel;
 			}
 		}
