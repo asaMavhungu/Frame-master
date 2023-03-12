@@ -25,12 +25,13 @@ namespace MVHASA001
 
 		void readImage(std::string filename);
 		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2);
-		void writeFrames(std::string outFile, int frameNo);
+		void writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight);
 
 		int getHeight() { return height; }
 		int getWidth() { return width; }
 		std::string getComment() { return comment; }
 		unsigned char * getSource() { return source; }
+		std::vector<unsigned char **> getImageSequence() {return imageSequence;}
 
 	};
 
