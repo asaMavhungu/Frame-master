@@ -61,11 +61,16 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 	// Using y = mx + c to get line for tragectory
 	// The (x, y) coord will be the starting point of our current frame
 	float m = (y2 - y1)/(x2-x1);
+
+	// y intercept of tragectory line
 	int c = y1 - m*x1;
+
+	// Coords for the corresponding y for current x-cord iteration
 	int y = 0;
 
 	for (int x = x1; x < x2; x++)
 	{
+		
 		y = m*x + c;
 		// floor the answer to get an integer
 		y = std::floor(y);
