@@ -7,7 +7,7 @@
 
 
 
-MVHASA001::FrameSequence::FrameSequence() : width(0), height(0), id(nullptr), source(nullptr)
+MVHASA001::FrameSequence::FrameSequence(void) : width(0), height(0), id(nullptr), source(nullptr)
 {}
 
 void MVHASA001::FrameSequence::readImage(std::string filename)
@@ -92,4 +92,14 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 		this->imageSequence.push_back(frame);
 	}
 
+}
+
+void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo)
+{
+
+	std::ofstream file(outFile, std::ios::binary);
+	file << "P5" << std::endl;
+    file << this->width << " " << this->height << std::endl;
+    file << "255" << std::endl;
+	file.write(reinterpret_cast<const char*>(this->imageSequence[frameNo]), width * height);
 }
