@@ -57,6 +57,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2)
 {
 	// Using y = mx + c to get line for tragectory
+	// The (x, y) coord will be the starting point of our current frame
 	float m = (y2 - y1)/(x2-x1);
 	int c = y1;
 	int y = 0;
