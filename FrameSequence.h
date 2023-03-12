@@ -25,6 +25,7 @@ namespace MVHASA001
 
 		void readImage(std::string filename);
 		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2);
+		void writeFrames(std::string outFile, int frameNo);
 
 		int getHeight() { return height; }
 		int getWidth() { return width; }
