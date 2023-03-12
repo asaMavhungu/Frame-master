@@ -15,6 +15,7 @@ namespace MVHASA001
 		int width, height;
 		char *id;
 		unsigned char * source;
+		std::string comment;
 
 		std::vector<unsigned char **> imageSequence;
 
@@ -24,6 +25,11 @@ namespace MVHASA001
 
 		void readImage(std::string filename);
 		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2);
+
+		int getHeight() { return height; }
+		int getWidth() { return width; }
+		std::string getComment() { return comment; }
+		unsigned char * getSource() { return source; }
 
 	};
 
