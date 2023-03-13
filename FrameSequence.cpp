@@ -91,7 +91,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				y = std::floor(y);
 
 				// variable for accerleration
-				float t = static_cast<float>(x) / x2;
+				float t = static_cast<float>(x2-x) / (x2-x1);
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
@@ -141,6 +141,12 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				// floor the answer to get an integer
 				y = std::floor(y);
 
+				// variable for accerleration
+				float t = static_cast<float>(x1-x) / (x1-x2);
+				bool acc = false;
+				if (t > 0.25 && t < 0.75)
+					acc = true;
+	
 				unsigned char ** frame;
 				frame = new unsigned char * [windowHeight];
 				for(int row = y; row < y+windowHeight; ++row)
@@ -160,8 +166,21 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-				else this->imageSequence.push_back(frame);
+				if (!acc)
+				{
+					if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+					else this->imageSequence.push_back(frame);
+				}
+				else
+				{
+					// skip frames to accerlerate
+					if (x%2 == 0)
+					{
+						if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+						else this->imageSequence.push_back(frame);
+					}
+
+				}
 			}
 
 		}
