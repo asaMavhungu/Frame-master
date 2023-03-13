@@ -12,6 +12,18 @@
 MVHASA001::FrameSequence::FrameSequence(void) : width(0), height(0), id(nullptr), source(nullptr)
 {}
 
+MVHASA001::FrameSequence::~FrameSequence(void)
+{
+	// Delete the 2D arrays and the vector
+    for (int i = 0; i < this->imageSequence.size(); i++) {
+        for (int j = 0; j < 2; j++) {
+            delete[] this->imageSequence[i][j];
+        }
+        delete[] this->imageSequence[i];
+    }
+    this->imageSequence.clear();
+}
+
 void MVHASA001::FrameSequence::resetImageSequence(void)
 {
 	imageSequence.clear();
