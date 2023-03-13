@@ -12,6 +12,10 @@
 MVHASA001::FrameSequence::FrameSequence(void) : width(0), height(0), id(nullptr), source(nullptr)
 {}
 
+void MVHASA001::FrameSequence::resetImageSequence(void)
+{
+	imageSequence.clear();
+}
 void MVHASA001::FrameSequence::readImage(std::string filename)
 {
 	std::ifstream in(filename, std::ios::binary);

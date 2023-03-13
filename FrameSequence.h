@@ -35,6 +35,7 @@ namespace MVHASA001
 		std::vector<unsigned char **> getImageSequence() {return imageSequence;}
 		int getFrameNum() {return imageSequence.size();}
 		int getSourceSize() {return sourceSize;}
+		void resetImageSequence();
 
 	};
 
