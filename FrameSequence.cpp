@@ -144,29 +144,59 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 	}
 	else
 	{
-		for (int y = y1; y < y2; ++y)
+		if (y1 <= y2)
 		{
-			unsigned char ** frame;
-			frame = new unsigned char * [windowHeight];
-			for(int row = y; row < y+windowHeight; ++row)
+			for (int y = y1; y < y2; ++y)
 			{
-				int i = row - y;
-				frame[i] = new unsigned char[windowWidth];
-				for(int col = x1; col < x1+windowWidth; ++col)
+				unsigned char ** frame;
+				frame = new unsigned char * [windowHeight];
+				for(int row = y; row < y+windowHeight; ++row)
 				{
-					int j = col - x1;
-					int index = row * this->width + col;
-					unsigned char pixel;
-					if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
-						pixel = this->source[index];
-					else
-						pixel = 255;
-					if (invert) frame[i][j] = ~pixel;
-					else frame[i][j] = pixel;
+					int i = row - y;
+					frame[i] = new unsigned char[windowWidth];
+					for(int col = x1; col < x1+windowWidth; ++col)
+					{
+						int j = col - x1;
+						int index = row * this->width + col;
+						unsigned char pixel;
+						if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
+							pixel = this->source[index];
+						else
+							pixel = 255;
+						if (invert) frame[i][j] = ~pixel;
+						else frame[i][j] = pixel;
+					}
 				}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 			}
-			if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-			else this->imageSequence.push_back(frame);
+		}
+		else
+		{
+			for (int y = y1; y > y2; --y)
+			{
+				unsigned char ** frame;
+				frame = new unsigned char * [windowHeight];
+				for(int row = y; row < y+windowHeight; ++row)
+				{
+					int i = row - y;
+					frame[i] = new unsigned char[windowWidth];
+					for(int col = x1; col < x1+windowWidth; ++col)
+					{
+						int j = col - x1;
+						int index = row * this->width + col;
+						unsigned char pixel;
+						if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
+							pixel = this->source[index];
+						else
+							pixel = 255;
+						if (invert) frame[i][j] = ~pixel;
+						else frame[i][j] = pixel;
+					}
+				}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
+			}
 		}
 	}
 }
