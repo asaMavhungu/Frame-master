@@ -66,6 +66,17 @@ int main(int argc, char* argv[])
 	int width = sizes[0];
 	int height = sizes[1];
 
+	if (width == 0 || height == 0)
+	{
+		std::cerr << "Error: Window dimensions should both be positive." << std::endl;
+		return 1;
+	}
+
+	bool error = false;
+
+
+
+
 	bool invert= false;
 	bool reverse = false;
 
@@ -87,6 +98,24 @@ int main(int argc, char* argv[])
 
 		if (points.size() == 4)
 		{
+
+			bool compose = true;
+
+			if (x1 < 0 || y1< 0)
+			{
+				std::cerr << "Error: Starting point co-ordinates should both be positive." << std::endl;
+				return 1;
+			}
+
+			if ( (x2 + width) > f.getWidth() || (y2+height) > f.getHeight())
+			{
+				std::cerr << "Error: End point co-ordinates are out of bound of PGM with dimensions " 
+							<< f.getHeight() << " "
+							<< f.getWidth() << " " 
+							<< std::endl;
+				return 1;
+			}
+			
 			f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, true);
 			for (int i = 0; i < f.getFrameNum(); ++i)
 			{
@@ -103,7 +132,27 @@ int main(int argc, char* argv[])
 				x2 = points[i];
 				y2 = points[i+1];
 
-				f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, false);
+				bool compose = true;
+
+				if (x1 < 0 || y1< 0)
+				{
+					std::cerr << "Error: Starting point co-ordinates should both be positive." << std::endl;
+					compose = false;
+					error = true;
+				}
+
+				if ( (x2 + width) > f.getWidth() || (y2+height) > f.getHeight())
+				{
+					std::cerr << "Error: End point co-ordinates are out of bound of PGM with dimensions " 
+								<< f.getHeight() << " "
+								<< f.getWidth() << " " 
+								<< std::endl;
+					compose = false;
+					error = true;
+				}
+
+				if (compose)
+					f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, false);
 
 				x1 = points[i];
 				y1 = points[i+1];
@@ -123,5 +172,7 @@ int main(int argc, char* argv[])
 		++i;
 	}
 	
+	if (error)
+		return 1;
 	return 0;
 }
