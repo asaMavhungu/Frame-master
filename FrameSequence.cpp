@@ -4,6 +4,8 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
+
 
 
 
@@ -153,9 +155,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight)
 {
 
-	char filename[256];
-    sprintf(filename, outFile.c_str(), frameNo);
-	std::cout << filename << std::endl;
+    std::ostringstream oss;
+	oss << outFile << std::setw(4) << frameNo << ".pgm";
+	std::string filename = oss.str();
 	std::ofstream file(filename, std::ios::binary);
 	file << "P5" << std::endl;
     file << windowWidth << " " << windowHeight << std::endl;
