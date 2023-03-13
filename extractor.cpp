@@ -2,6 +2,7 @@
 #include "FrameSequence.h"
 #include <string>
 #include <cstring>
+#include <cstdio>
 
 using namespace MVHASA001;
 
@@ -9,7 +10,6 @@ int main(int argc, char* argv[])
 {
 	FrameSequence f;
 	std::string imageName = argv[1];
-
 
 
 	f.readImage(imageName);
@@ -55,32 +55,16 @@ int main(int argc, char* argv[])
 	y1P = std::stoi(y1);
 	x2P = std::stoi(x2);
 	y2P = std::stoi(y2);
-
 	f.makeFrames(heightP, widthP, x1P, y1P, x2P, y2P);
 
-	int frame = 0;
-	int i =0;
-	int j =0;
-
-
-	unsigned char* x = f.getSource();
-	unsigned char* y = f.getImageSequence()[0][0];
-
-	for (int i = 0; i < 100; i++)
+	
+	for (int i = 0; i < f.getFrameNum(); i++)
 	{
-		unsigned char one = x[i];
-		unsigned char two = y[i];
-
-		bool ey = one == two;
-
-		//std::cout << ey << std::endl;
-		
+		std::string asa = "output_%d.pgm";
+		f.writeFrames(asa, i, widthP, heightP);
 	}
 	
-	//std::cout << f.getSource()[i] ;
-	//std::cout << "\n" << f.getImageSequence()[frame][i][j] << std::endl;
-
-	f.writeFrames("asa.pgm", 0, 100, 100);
+	//f.writeFrames("asa.pgm", 0, 100, 100);
 
 	return 0;
 }
