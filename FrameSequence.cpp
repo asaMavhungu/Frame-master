@@ -57,7 +57,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	std::cout << "here";
 }
 
-void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2)
+void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert)
 {
 	// Account for division by zero error during gradient calculation
 	if ( x1 != x2)
@@ -76,7 +76,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 		std::cout << "here**************************5\n";
 		if (x1 < x2)
 		{
-			for (int x = x1; x < x2; x++)
+			for (int x = x1; x < x2; ++x)
 			{
 			
 				y = m*x + c;
@@ -93,7 +93,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					{
 						int j = col - x;
 						unsigned char pixel = this->source[row * this->width + col];
-						frame[i][j] = pixel;
+						if (invert) frame[i][j] = ~pixel;
+						else frame[i][j] = pixel;
 					}
 				}
 				this->imageSequence.push_back(frame);
@@ -101,7 +102,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 		}
 		else if (x1 > x2)
 		{
-			for (int x = x1; x > x2; x--)
+			for (int x = x1; x > x2; --x)
 			{
 				y = m*x + c;
 				// floor the answer to get an integer
@@ -117,7 +118,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					{
 						int j = col - x;
 						unsigned char pixel = this->source[row * this->width + col];
-						frame[i][j] = pixel;
+						if (invert) frame[i][j] = ~pixel;
+						else frame[i][j] = pixel;
 					}
 				}
 				this->imageSequence.push_back(frame);
@@ -127,7 +129,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 	}
 	else
 	{
-		for (int y = y1; y < y2; y++)
+		for (int y = y1; y < y2; ++y)
 		{
 			unsigned char ** frame;
 			frame = new unsigned char * [windowHeight];
@@ -139,7 +141,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				{
 					int j = col - x1;
 					unsigned char pixel = this->source[row * this->width + col];
-					frame[i][j] = pixel;
+					if (invert) frame[i][j] = ~pixel;
+					else frame[i][j] = pixel;
 				}
 			}
 			this->imageSequence.push_back(frame);

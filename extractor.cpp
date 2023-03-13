@@ -48,6 +48,10 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	bool invert = false;
+	if (operation == "invert")
+		invert = true;
+
 	int heightP, widthP, x1P, y1P, x2P, y2P;
 	heightP = std::stoi(height);
 	widthP = std::stoi(width);
@@ -55,10 +59,10 @@ int main(int argc, char* argv[])
 	y1P = std::stoi(y1);
 	x2P = std::stoi(x2);
 	y2P = std::stoi(y2);
-	f.makeFrames(heightP, widthP, x1P, y1P, x2P, y2P);
+	f.makeFrames(heightP, widthP, x1P, y1P, x2P, y2P, invert);
 
 	
-	for (int i = 0; i < f.getFrameNum(); i++)
+	for (int i = 0; i < f.getFrameNum(); ++i)
 	{
 		std::string asa = "output_%d.pgm";
 		f.writeFrames(asa, i, widthP, heightP);
