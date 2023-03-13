@@ -85,10 +85,13 @@ int main(int argc, char* argv[])
 			invert = true;
 		}
 
-		f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, true);
-		for (int i = 0; i < f.getFrameNum(); ++i)
+		if (points.size() == 4)
 		{
-			f.writeFrames(filename, i, width, height);
+			f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, true);
+			for (int i = 0; i < f.getFrameNum(); ++i)
+			{
+				f.writeFrames(filename, i, width, height);
+			}
 		}
 		++i;
 	}
