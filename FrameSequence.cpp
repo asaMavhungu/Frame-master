@@ -54,10 +54,12 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	this->source = buffer;
 	this->height = height;
 	this->width = width;
+	std::cout << "here";
 }
 
 void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2)
 {
+	std::cout << "here**************************4\n";
 	// Using y = mx + c to get line for tragectory
 	// The (x, y) coord will be the starting point of our current frame
 	float m = (y2 - y1)/(x2-x1);
@@ -67,7 +69,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 
 	// Coords for the corresponding y for current x-cord iteration
 	int y = 0;
-	
+	std::cout << "here**************************5\n";
 	if (x1 < x2)
 	{
 		for (int x = x1; x < x2; x++)
@@ -94,11 +96,10 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 			this->imageSequence.push_back(frame);
 		}
 	}
-	else if (x2 < x1)
+	else if (x1 > x2)
 	{
-		for (int x = x2; x > x1; x--)
+		for (int x = x1; x > x2; x--)
 		{
-		
 			y = m*x + c;
 			// floor the answer to get an integer
 			y = std::floor(y);
