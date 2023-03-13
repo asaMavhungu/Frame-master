@@ -58,7 +58,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	this->width = width;
 }
 
-void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool inverse, bool reset)
+void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool reverse, bool reset)
 {
 	if (reset) imageSequence.clear();
 	// Account for division by zero error during gradient calculation
@@ -99,7 +99,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
 				else this->imageSequence.push_back(frame);
 			}
 		}
@@ -125,7 +125,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
 				else this->imageSequence.push_back(frame);
 			}
 
@@ -149,7 +149,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					else frame[i][j] = pixel;
 				}
 			}
-			if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+			if (reverse) imageSequence.insert(imageSequence.begin(), frame);
 			else this->imageSequence.push_back(frame);
 		}
 	}
