@@ -59,71 +59,74 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 
 void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2)
 {
-	std::cout << "here**************************4\n";
-	// Using y = mx + c to get line for tragectory
-	// The (x, y) coord will be the starting point of our current frame
-	float m = (y2 - y1)/(x2-x1);
-
-	// y intercept of tragectory line
-	int c = y1 - m*x1;
-
-	// Coords for the corresponding y for current x-cord iteration
-	int y = 0;
-	std::cout << "here**************************5\n";
-	if (x1 < x2)
+	// Account for division by zero error during gradient calculation
+	if ( x1 != x2)
 	{
-		for (int x = x1; x < x2; x++)
-		{
-		
-			y = m*x + c;
-			// floor the answer to get an integer
-			y = std::floor(y);
+		std::cout << "here**************************4\n";
+		// Using y = mx + c to get line for tragectory
+		// The (x, y) coord will be the starting point of our current frame
+		float m = (y2 - y1)/(x2-x1);
 
-			unsigned char ** frame;
-			frame = new unsigned char * [windowHeight];
-			for(int row = y; row < y+windowHeight; ++row)
+		// y intercept of tragectory line
+		int c = y1 - m*x1;
+
+		// Coords for the corresponding y for current x-cord iteration
+		int y = 0;
+		float x = 0;
+		std::cout << "here**************************5\n";
+		if (x1 < x2)
+		{
+			for (int x = x1; x < x2; x++)
 			{
-				int i = row - y;
-				frame[i] = new unsigned char[windowWidth];
-				for(int col = x; col < x+windowWidth; ++col)
+			
+				y = m*x + c;
+				// floor the answer to get an integer
+				y = std::floor(y);
+
+				unsigned char ** frame;
+				frame = new unsigned char * [windowHeight];
+				for(int row = y; row < y+windowHeight; ++row)
 				{
-					int j = col - x;
-					unsigned char pixel = this->source[row * this->width + col];
-					frame[i][j] = pixel;
+					int i = row - y;
+					frame[i] = new unsigned char[windowWidth];
+					for(int col = x; col < x+windowWidth; ++col)
+					{
+						int j = col - x;
+						unsigned char pixel = this->source[row * this->width + col];
+						frame[i][j] = pixel;
+					}
 				}
+				this->addFrame();
+				this->imageSequence.push_back(frame);
 			}
-			this->addFrame();
-			this->imageSequence.push_back(frame);
+		}
+		else if (x1 > x2)
+		{
+			for (int x = x1; x > x2; x--)
+			{
+				y = m*x + c;
+				// floor the answer to get an integer
+				y = std::floor(y);
+
+				unsigned char ** frame;
+				frame = new unsigned char * [windowHeight];
+				for(int row = y; row < y+windowHeight; ++row)
+				{
+					int i = row - y;
+					frame[i] = new unsigned char[windowWidth];
+					for(int col = x; col < x+windowWidth; ++col)
+					{
+						int j = col - x;
+						unsigned char pixel = this->source[row * this->width + col];
+						frame[i][j] = pixel;
+					}
+				}
+				this->addFrame();
+				this->imageSequence.push_back(frame);
+			}
+
 		}
 	}
-	else if (x1 > x2)
-	{
-		for (int x = x1; x > x2; x--)
-		{
-			y = m*x + c;
-			// floor the answer to get an integer
-			y = std::floor(y);
-
-			unsigned char ** frame;
-			frame = new unsigned char * [windowHeight];
-			for(int row = y; row < y+windowHeight; ++row)
-			{
-				int i = row - y;
-				frame[i] = new unsigned char[windowWidth];
-				for(int col = x; col < x+windowWidth; ++col)
-				{
-					int j = col - x;
-					unsigned char pixel = this->source[row * this->width + col];
-					frame[i][j] = pixel;
-				}
-			}
-			this->addFrame();
-			this->imageSequence.push_back(frame);
-		}
-
-	}
-	
-
 }
 
 void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight)
