@@ -56,12 +56,11 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	this->source = buffer;
 	this->height = height;
 	this->width = width;
-	std::cout << "here";
 }
 
-void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert)
+void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool inverse, bool reset)
 {
-	imageSequence.clear();
+	if (reset) imageSequence.clear();
 	// Account for division by zero error during gradient calculation
 	if ( x1 != x2)
 	{
@@ -157,7 +156,7 @@ void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int
 {
 
     std::ostringstream oss;
-	oss << outFile << std::setw(4) << frameNo << ".pgm";
+	oss << outFile << std::setw(4) << std::setfill('0') << frameNo << ".pgm";
 	std::string filename = oss.str();
 	std::ofstream file(filename, std::ios::binary);
 	file << "P5" << std::endl;
