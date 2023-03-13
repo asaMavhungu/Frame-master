@@ -32,6 +32,7 @@ namespace MVHASA001
 		std::string getComment() { return comment; }
 		unsigned char * getSource() { return source; }
 		std::vector<unsigned char **> getImageSequence() {return imageSequence;}
+		int getFrameNum() {return imageSequence.size();}
 
 	};
 
