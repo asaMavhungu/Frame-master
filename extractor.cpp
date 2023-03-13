@@ -93,29 +93,35 @@ int main(int argc, char* argv[])
 				f.writeFrames(filename, i, width, height);
 			}
 		}
+		else
+		{
+			x1 = points[0];
+			y1 = points[1];
+
+			for (int i = 2; i < points.size(); ++i)
+			{
+				x2 = points[i];
+				y2 = points[i+1];
+
+				f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, false);
+
+				x1 = points[i];
+				y1 = points[i+1];
+
+				++i;
+			}
+
+			for (int i = 0; i < f.getFrameNum(); ++i)
+			{
+				f.writeFrames(filename, i, width, height);
+			}
+			f.resetImageSequence();
+
+
+		}
+
 		++i;
 	}
-
-/*
-	int heightP, widthP, x1P, y1P, x2P, y2P;
-	heightP = std::stoi(height);
-	widthP = std::stoi(width);
-	x1P = std::stoi(x1);
-	y1P = std::stoi(y1);
-	x2P = std::stoi(x2);
-	y2P = std::stoi(y2);
-
 	
-	f.makeFrames(heightP, widthP, x1P, y1P, x2P, y2P, invert);
-
-	
-	for (int i = 0; i < f.getFrameNum(); ++i)
-	{
-		std::string asa = "output_%d.pgm";
-		f.writeFrames(asa, i, widthP, heightP);
-	}
-	*/
-	//f.writeFrames("asa.pgm", 0, 100, 100);
-
 	return 0;
 }
