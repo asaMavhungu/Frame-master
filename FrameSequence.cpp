@@ -99,7 +99,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				this->imageSequence.push_back(frame);
+				if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 			}
 		}
 		else if (x1 > x2)
@@ -124,7 +125,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				this->imageSequence.push_back(frame);
+				if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 			}
 
 		}
@@ -147,7 +149,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					else frame[i][j] = pixel;
 				}
 			}
-			this->imageSequence.push_back(frame);
+			if (inverse) imageSequence.insert(imageSequence.begin(), frame);
+			else this->imageSequence.push_back(frame);
 		}
 	}
 }

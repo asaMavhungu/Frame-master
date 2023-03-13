@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
 	int height = sizes[1];
 
 	bool invert= false;
+	bool inverse = false;
 	std::cout << "here**************************5\n";
 	for (int i = 0; i < int (properties.size()); ++i)
 	{
@@ -74,8 +75,9 @@ int main(int argc, char* argv[])
 		std::string filename = properties[i+1];
 
 		if (operation == "invert") invert = true;
+		if (operation == "inverse") inverse = true;
 		std::cout << "here**************************5\n";
-		f.makeFrames(height, width, x1, y1, x2, y2, invert, false, true);
+		f.makeFrames(height, width, x1, y1, x2, y2, invert, inverse, true);
 		for (int i = 0; i < f.getFrameNum(); ++i)
 		{
 			f.writeFrames(filename, i, width, height);
