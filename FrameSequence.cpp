@@ -56,6 +56,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	this->source = buffer;
 	this->height = height;
 	this->width = width;
+	this->sourceSize = width * height;
 }
 
 void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool reverse, bool reset)
@@ -94,7 +95,12 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					for(int col = x; col < x+windowWidth; ++col)
 					{
 						int j = col - x;
-						unsigned char pixel = this->source[row * this->width + col];
+						int index = row * this->width + col;
+						unsigned char pixel;
+						if (index < this->sourceSize)
+							pixel = this->source[index];
+						else
+							pixel = 255;
 						if (invert) frame[i][j] = ~pixel;
 						else frame[i][j] = pixel;
 					}
@@ -120,7 +126,12 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					for(int col = x; col < x+windowWidth; ++col)
 					{
 						int j = col - x;
-						unsigned char pixel = this->source[row * this->width + col];
+						int index = row * this->width + col;
+						unsigned char pixel;
+						if (index < this->sourceSize)
+							pixel = this->source[index];
+						else
+							pixel = 255;
 						if (invert) frame[i][j] = ~pixel;
 						else frame[i][j] = pixel;
 					}
@@ -144,7 +155,12 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				for(int col = x1; col < x1+windowWidth; ++col)
 				{
 					int j = col - x1;
-					unsigned char pixel = this->source[row * this->width + col];
+					int index = row * this->width + col;
+					unsigned char pixel;
+					if (index < this->sourceSize)
+						pixel = this->source[index];
+					else
+						pixel = 255;
 					if (invert) frame[i][j] = ~pixel;
 					else frame[i][j] = pixel;
 				}
