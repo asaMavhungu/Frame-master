@@ -76,7 +76,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 	in.close();
 }
 
-void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool reverse, bool reset)
+void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool reverse, bool accerleration, bool reset)
 {
 	if (reset) imageSequence.clear();
 	// Account for division by zero error during gradient calculation
@@ -107,7 +107,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
-				if(acc && x%2==0)
+				if(acc && x%2==0 && accerleration)
 					continue;
 
 				unsigned char ** frame;
@@ -125,8 +125,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 							pixel = this->source[index];
 						else
 							pixel = 255;
-						if (invert) frame[i][j] = ~pixel;
-						else frame[i][j] = pixel;
+						frame[i][j] = pixel;
 					}
 				}
 				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
@@ -148,7 +147,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
-				if(acc && x%2==0)
+				if(acc && x%2==0 && accerleration)
 					continue;
 				
 				unsigned char ** frame;
@@ -166,8 +165,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 							pixel = this->source[index];
 						else
 							pixel = 255;
-						if (invert) frame[i][j] = ~pixel;
-						else frame[i][j] = pixel;
+						frame[i][j] = pixel;
 					}
 				}
 				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
@@ -188,7 +186,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
-				if(acc && y%2==0)
+				if(acc && y%2==0 && accerleration)
 					continue;
 
 				unsigned char ** frame;
@@ -206,8 +204,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 							pixel = this->source[index];
 						else
 							pixel = 255;
-						if (invert) frame[i][j] = ~pixel;
-						else frame[i][j] = pixel;
+						frame[i][j] = pixel;
 					}
 				}
 				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
@@ -224,7 +221,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
-				if(acc && y%2==0)
+				if(acc && y%2==0 && accerleration)
 					continue;
 
 				unsigned char ** frame;
@@ -242,8 +239,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 							pixel = this->source[index];
 						else
 							pixel = 255;
-						if (invert) frame[i][j] = ~pixel;
-						else frame[i][j] = pixel;
+						frame[i][j] = pixel;
 					}
 				}
 				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
@@ -254,7 +250,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 	}
 }
 
-void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight)
+void MVHASA001::FrameSequence::writeFrames(std::string outFile, bool invert, int frameNo, int windowWidth, int windowHeight)
 {
 
     std::ostringstream oss;
@@ -266,9 +262,24 @@ void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int
     file << "255" << std::endl;
 
 	unsigned char** data = this->imageSequence[frameNo];
+
 	for (int y = 0; y < windowHeight; y++) 
 	{
-		file.write(reinterpret_cast<const char*>(data[y]), windowWidth);
+		if (invert)
+		{
+			unsigned char* val = new unsigned char[windowWidth];
+
+			for(int i=0; i < windowWidth; ++i)
+			{
+			val[i] = ~data[y][i];
+			}
+			file.write(reinterpret_cast<const char*>(val), windowWidth);
+		}
+		else
+		{
+			file.write(reinterpret_cast<const char*>(data[y]), windowWidth);
+		}
+		
 	}
 
 }

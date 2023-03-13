@@ -26,8 +26,8 @@ namespace MVHASA001
 		~FrameSequence(); // default destructor
 
 		void readImage(std::string filename);
-		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert, bool reverse, bool reset);
-		void writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight);
+		void makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool reverse, bool accerleration, bool reset);
+		void writeFrames(std::string outFile, bool invert, int frameNo, int windowWidth, int windowHeight);
 
 		int getHeight() { return height; }
 		int getWidth() { return width; }

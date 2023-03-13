@@ -95,6 +95,11 @@ int main(int argc, char* argv[])
 			reverse = true;
 			invert = true;
 		}
+		else if (operation == "none") 
+		{
+			reverse = false;
+			invert = false;
+		}
 
 		if (points.size() == 4)
 		{
@@ -116,11 +121,13 @@ int main(int argc, char* argv[])
 				return 1;
 			}
 			
-			f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, true);
+			f.makeFrames(height, width, x1, y1, x2, y2, reverse, false, true);
 			for (int i = 0; i < f.getFrameNum(); ++i)
 			{
-				f.writeFrames(filename, i, width, height);
+				f.writeFrames(filename, invert, i, width, height);
 			}
+			f.resetImageSequence();
+
 		}
 		else
 		{
@@ -152,7 +159,7 @@ int main(int argc, char* argv[])
 				}
 
 				if (compose)
-					f.makeFrames(height, width, x1, y1, x2, y2, invert, reverse, false);
+					f.makeFrames(height, width, x1, y1, x2, y2, reverse,true, false);
 
 				x1 = points[i];
 				y1 = points[i+1];
@@ -162,7 +169,7 @@ int main(int argc, char* argv[])
 
 			for (int i = 0; i < f.getFrameNum(); ++i)
 			{
-				f.writeFrames(filename, i, width, height);
+				f.writeFrames(filename, invert, i, width, height);
 			}
 			f.resetImageSequence();
 
