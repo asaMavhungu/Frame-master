@@ -127,6 +127,27 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 
 		}
 	}
+	else
+	{
+		for (int y = y1; y < y2; y++)
+		{
+			unsigned char ** frame;
+			frame = new unsigned char * [windowHeight];
+			for(int row = y; row < y+windowHeight; ++row)
+			{
+				int i = row - y;
+				frame[i] = new unsigned char[windowWidth];
+				for(int col = x1; col < x1+windowWidth; ++col)
+				{
+					int j = col - x1;
+					unsigned char pixel = this->source[row * this->width + col];
+					frame[i][j] = pixel;
+				}
+			}
+			this->addFrame();
+			this->imageSequence.push_back(frame);
+		}
+	}
 }
 
 void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight)
