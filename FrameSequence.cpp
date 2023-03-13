@@ -61,6 +61,7 @@ void MVHASA001::FrameSequence::readImage(std::string filename)
 
 void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int x1, int y1, int x2, int y2, bool invert)
 {
+	imageSequence.clear();
 	// Account for division by zero error during gradient calculation
 	if ( x1 != x2)
 	{
