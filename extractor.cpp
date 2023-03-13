@@ -15,14 +15,6 @@ int main(int argc, char* argv[])
 
 	f.readImage(imageName);
 
-	std::string x1;
-	std::string y1;
-	std::string x2;
-	std::string y2;
-	std::string width;
-	std::string height;
-	std::string operation;
-	std::string name;
 	
 	std::vector<int> points;
 	std::vector<int> sizes;
@@ -65,28 +57,31 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	bool invert = false;
-	if (operation == "invert")
-		invert = true;
+	int x1 = points[0];
+	int y1 = points[1];
+	int x2 = points[2];
+	int y2 = points[3];
 
 
-	for (int i : points)
+	int width = sizes[0];
+	int height = sizes[1];
+
+	bool invert= false;
+	std::cout << "here**************************5\n";
+	for (int i = 0; i < int (properties.size()); ++i)
 	{
-		std::cout << i << " ";
-	}
-	std::cout << "points" << std::endl;
+		std::string operation = properties[i];
+		std::string filename = properties[i+1];
 
-	for (int i : sizes)
-	{
-		std::cout << i << " ";
+		if (operation == "invert") invert = true;
+		std::cout << "here**************************5\n";
+		f.makeFrames(height, width, x1, y1, x2, y2, invert, false, true);
+		for (int i = 0; i < f.getFrameNum(); ++i)
+		{
+			f.writeFrames(filename, i, width, height);
+		}
+		++i;
 	}
-	std::cout << "sizes" << std::endl;
-
-	for (std::string i : properties)
-	{
-		std::cout << i << " ";
-	}
-	std::cout << "properties"<< std::endl;
 
 /*
 	int heightP, widthP, x1P, y1P, x2P, y2P;
