@@ -67,36 +67,71 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 
 	// Coords for the corresponding y for current x-cord iteration
 	int y = 0;
-
-	for (int x = x1; x < x2; x++)
+	
+	if (x1 < x2)
 	{
-		
-		y = m*x + c;
-		// floor the answer to get an integer
-		y = std::floor(y);
-
-		unsigned char ** frame;
-		frame = new unsigned char * [windowHeight];
-		for(int row = y; row < y+windowHeight; ++row)
+		for (int x = x1; x < x2; x++)
 		{
-			int i = row - y;
-			frame[i] = new unsigned char[windowWidth];
-			for(int col = x; col < x+windowWidth; ++col)
+		
+			y = m*x + c;
+			// floor the answer to get an integer
+			y = std::floor(y);
+
+			unsigned char ** frame;
+			frame = new unsigned char * [windowHeight];
+			for(int row = y; row < y+windowHeight; ++row)
 			{
-				int j = col - x;
-				unsigned char pixel = this->source[row * this->width + col];
-				frame[i][j] = pixel;
+				int i = row - y;
+				frame[i] = new unsigned char[windowWidth];
+				for(int col = x; col < x+windowWidth; ++col)
+				{
+					int j = col - x;
+					unsigned char pixel = this->source[row * this->width + col];
+					frame[i][j] = pixel;
+				}
 			}
+			this->addFrame();
+			this->imageSequence.push_back(frame);
+		}
+	}
+	else if (x2 < x1)
+	{
+		for (int x = x2; x > x1; x--)
+		{
+		
+			y = m*x + c;
+			// floor the answer to get an integer
+			y = std::floor(y);
+
+			unsigned char ** frame;
+			frame = new unsigned char * [windowHeight];
+			for(int row = y; row < y+windowHeight; ++row)
+			{
+				int i = row - y;
+				frame[i] = new unsigned char[windowWidth];
+				for(int col = x; col < x+windowWidth; ++col)
+				{
+					int j = col - x;
+					unsigned char pixel = this->source[row * this->width + col];
+					frame[i][j] = pixel;
+				}
+			}
+			this->addFrame();
+			this->imageSequence.push_back(frame);
 		}
 
-		this->imageSequence.push_back(frame);
 	}
+	
 
 }
 
 void MVHASA001::FrameSequence::writeFrames(std::string outFile, int frameNo, int windowWidth, int windowHeight)
 {
-	std::ofstream file(outFile, std::ios::binary);
+
+	char filename[256];
+    sprintf(filename, outFile.c_str(), frameNo);
+	std::cout << filename << std::endl;
+	std::ofstream file(filename, std::ios::binary);
 	file << "P5" << std::endl;
     file << windowWidth << " " << windowHeight << std::endl;
     file << "255" << std::endl;
