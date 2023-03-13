@@ -96,7 +96,6 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						frame[i][j] = pixel;
 					}
 				}
-				this->addFrame();
 				this->imageSequence.push_back(frame);
 			}
 		}
@@ -121,7 +120,6 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						frame[i][j] = pixel;
 					}
 				}
-				this->addFrame();
 				this->imageSequence.push_back(frame);
 			}
 
@@ -144,7 +142,6 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					frame[i][j] = pixel;
 				}
 			}
-			this->addFrame();
 			this->imageSequence.push_back(frame);
 		}
 	}
