@@ -95,6 +95,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
+				if(acc && x%2==0)
+					continue;
 
 				unsigned char ** frame;
 				frame = new unsigned char * [windowHeight];
@@ -115,21 +117,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (!acc)
-				{
-					if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-					else this->imageSequence.push_back(frame);
-				}
-				else
-				{
-					// skip frames to accerlerate
-					if (x%2 == 0)
-					{
-						if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-						else this->imageSequence.push_back(frame);
-					}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 
-				}
 				
 			}
 		}
@@ -146,7 +136,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
-	
+				if(acc && x%2==0)
+					continue;
+				
 				unsigned char ** frame;
 				frame = new unsigned char * [windowHeight];
 				for(int row = y; row < y+windowHeight; ++row)
@@ -166,21 +158,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (!acc)
-				{
-					if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-					else this->imageSequence.push_back(frame);
-				}
-				else
-				{
-					// skip frames to accerlerate
-					if (x%2 == 0)
-					{
-						if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-						else this->imageSequence.push_back(frame);
-					}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 
-				}
 			}
 
 		}
@@ -196,6 +176,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
+				if(acc && y%2==0)
+					continue;
 
 				unsigned char ** frame;
 				frame = new unsigned char * [windowHeight];
@@ -216,21 +198,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (!acc)
-				{
-					if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-					else this->imageSequence.push_back(frame);
-				}
-				else
-				{
-					// skip frames to accerlerate
-					if (y%2 == 0)
-					{
-						if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-						else this->imageSequence.push_back(frame);
-					}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 
-				}
 			}
 		}
 		else
@@ -242,6 +212,8 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 				bool acc = false;
 				if (t > 0.25 && t < 0.75)
 					acc = true;
+				if(acc && y%2==0)
+					continue;
 
 				unsigned char ** frame;
 				frame = new unsigned char * [windowHeight];
@@ -262,21 +234,9 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						else frame[i][j] = pixel;
 					}
 				}
-				if (!acc)
-				{
-					if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-					else this->imageSequence.push_back(frame);
-				}
-				else
-				{
-					// skip frames to accerlerate
-					if (y%2 == 0)
-					{
-						if (reverse) imageSequence.insert(imageSequence.begin(), frame);
-						else this->imageSequence.push_back(frame);
-					}
+				if (reverse) imageSequence.insert(imageSequence.begin(), frame);
+				else this->imageSequence.push_back(frame);
 
-				}
 			}
 		}
 	}
