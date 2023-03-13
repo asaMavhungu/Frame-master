@@ -97,7 +97,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						int j = col - x;
 						int index = row * this->width + col;
 						unsigned char pixel;
-						if (index < this->sourceSize)
+						if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
 							pixel = this->source[index];
 						else
 							pixel = 255;
@@ -128,7 +128,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 						int j = col - x;
 						int index = row * this->width + col;
 						unsigned char pixel;
-						if (index < this->sourceSize)
+						if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
 							pixel = this->source[index];
 						else
 							pixel = 255;
@@ -157,7 +157,7 @@ void MVHASA001::FrameSequence::makeFrames(int windowHeight, int windowWidth, int
 					int j = col - x1;
 					int index = row * this->width + col;
 					unsigned char pixel;
-					if (index < this->sourceSize)
+					if (index < this->sourceSize && index >= 0 && row > 0 && col > 0)
 						pixel = this->source[index];
 					else
 						pixel = 255;
