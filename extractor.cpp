@@ -29,6 +29,11 @@ int main(int argc, char* argv[])
 			arr = 1;
 			continue;
 		}
+		else if ( strcmp (argv[i], "-p") == 0)
+		{
+			arr = 4;	
+			continue;
+		}
 		else if ( strcmp (argv[i], "-s") == 0)
 		{
 			arr = 2;
@@ -50,6 +55,9 @@ int main(int argc, char* argv[])
 			break;
 		case 3:
 			properties.push_back(argv[i]);
+			break;
+		case 4:
+			arr = 1;
 			break;
 		
 		default:
