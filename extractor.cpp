@@ -56,9 +56,6 @@ int main(int argc, char* argv[])
 		case 3:
 			properties.push_back(argv[i]);
 			break;
-		case 4:
-			arr = 1;
-			break;
 		
 		default:
 			break;
