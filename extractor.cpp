@@ -29,6 +29,11 @@ int main(int argc, char* argv[])
 			arr = 1;
 			continue;
 		}
+		else if ( strcmp (argv[i], "-p") == 0)
+		{
+			arr = 1;	
+			i+= 2;
+		}
 		else if ( strcmp (argv[i], "-s") == 0)
 		{
 			arr = 2;
