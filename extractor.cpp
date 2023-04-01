@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
 		}
 		else if ( strcmp (argv[i], "-p") == 0)
 		{
-			arr = 4;	
-			continue;
+			arr = 1;	
+			i+= 2;
 		}
 		else if ( strcmp (argv[i], "-s") == 0)
 		{
