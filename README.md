@@ -7,6 +7,40 @@ This project is a video render implemented in C++ which can do the following:
 * Extract frames from the image file in a tragectory
 * Write out the seperate frames as PGM files
 
+## Operation
+This program is designed to process large images and extract specific frames based on user-defined parameters. The command line options for the program are as follows:
+
+`extractor <inputPGMfile> [options]`
+
+- ``<inputPGMfile>``: The large image file to be processed.
+
+### Options
+``-t <int> <int> <int> <int>``: Specifies the frame trajectory by providing the beginning and end origin pixel coordinates.
+
+- Example: -t 10 20 100 150 (defines trajectory from pixel (10,20) to (100,150))
+
+
+``-s <int> <int>``: Specifies the size of the small frame in pixels.
+
+- Example: -s 50 50 (sets the size of the small frame to 50x50 pixels)
+
+``-w <string> <string>``: Writes frames with the specified operation and name.
+
+- Example: -w resize small_frame (writes frames with the operation 'resize' and the name 'small_frame')
+
+### Operations for -w flag
+- **none**: No modification of data.
+- **invert**: Each pixel value 'v' becomes '255 - v'.
+- **reverse**: Reverse output (write frames from last to first).
+- **revinvert**: Reverse and invert output.
+
+
+### Example
+```bash
+extractor input_image.pgm -t 10 20 100 150 -s 50 50 -w invert small_frame
+```
+
+
 ## Files
 Files used in the implementation
 
